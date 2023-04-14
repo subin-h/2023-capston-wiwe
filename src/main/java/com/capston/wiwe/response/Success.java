@@ -10,4 +10,5 @@ import lombok.Getter;
 public class Success<T> implements Result {
 
     private T data;
+    private String message;
 }

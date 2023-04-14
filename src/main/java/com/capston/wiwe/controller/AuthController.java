@@ -29,7 +29,7 @@ public class AuthController {
     @PostMapping("/signup")
     public Response register(@Valid @RequestBody SignUpRequestDto registerDto) throws Exception{
         authService.signup(registerDto);
-        return success();
+        return success(null);
     }
 
     @ApiOperation(value = "로그인", notes = "로그인을 한다.")

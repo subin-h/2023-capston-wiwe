@@ -5,7 +5,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class Failure implements Result {
+public class Failure<T> implements Result {
 
     private String msg;
+    private T data;
 }
