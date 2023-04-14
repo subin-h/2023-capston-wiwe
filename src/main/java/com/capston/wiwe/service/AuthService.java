@@ -29,9 +29,7 @@ public class AuthService {
     @Transactional
     public User signup(SignUpRequestDto req) throws Exception{
         validateSignUpInfo(req);
-        if (!req.getPassword().equals(req.getCheckpassword())){
-            throw new Exception("비밀번호가 일치하지 않습니다.");
-        }
+
         User user = createSignupFormOfUser(req);
         userRepository.save(user);
         return user;

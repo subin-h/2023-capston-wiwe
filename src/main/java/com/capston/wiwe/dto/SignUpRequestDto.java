@@ -21,11 +21,6 @@ public class SignUpRequestDto {
     @NotBlank(message = "비밀번호를 입력해주세요.")
     private String password;
 
-
-    @NotBlank(message = "비밀번호를 입력해주세요.")
-    private String checkpassword;
-
-
     @NotBlank(message = "사용자 이름을 입력해주세요.")
     @Size(min = 2, message = "사용자 이름이 너무 짧습니다.")
     private String name;
