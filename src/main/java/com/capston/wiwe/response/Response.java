@@ -19,6 +19,7 @@ public class Response {
         return new Response(true, 0, new Success<>(data,"ok"));
     }
 
+
     public static Response failure(int code, String msg) {
         return new Response(false, code, new Failure(null,msg));
     }

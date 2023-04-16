@@ -1,4 +1,4 @@
-package com.capston.wiwe.dto;
+package com.capston.wiwe.dto.community;
 
 import com.capston.wiwe.entity.community.Boards;
 import lombok.AllArgsConstructor;
