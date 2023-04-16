@@ -31,4 +31,12 @@ public class BoardsController {
         return Response.success(boardsService.findBoards(id));
     }
 
+    @ApiOperation(value = "게시글 수정", notes = "게시글을 수정합니다.")
+    @PutMapping("/boards/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Response editBoard(@PathVariable long id, @Valid @RequestBody BoardsRequestDto req) {
+        return Response.success(boardsService.updateDto(id, req));
+    }
+
+
 }
