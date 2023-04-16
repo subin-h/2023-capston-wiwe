@@ -1,15 +1,12 @@
 package com.capston.wiwe.advice;
 
+import com.capston.wiwe.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import com.capston.wiwe.exception.LoginFailureException;
-import com.capston.wiwe.exception.MemberNicknameAlreadyExistsException;
-import com.capston.wiwe.exception.MemberNotFoundException;
-import com.capston.wiwe.exception.MemberUsernameAlreadyExistsException;
 import com.capston.wiwe.response.Response;
 
 import javax.management.relation.RoleNotFoundException;
@@ -77,4 +74,8 @@ public class ExceptionAdvice {
     public Response roleNotFoundException() {
         return Response.failure(404, "요청한 권한 등급을 찾을 수 없습니다.");
     }
+
+    @ExceptionHandler(BoardNotFoundException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public Response boardsNotFoundException() { return Response.failure(404, "해당 게시글을 조회할 수 없습니다."); }
 }

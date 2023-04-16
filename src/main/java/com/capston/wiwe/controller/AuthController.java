@@ -1,9 +1,12 @@
 package com.capston.wiwe.controller;
 
 
+import com.capston.wiwe.config.jwt.JwtFilter;
 import com.capston.wiwe.dto.SignUpRequestDto;
+import com.capston.wiwe.dto.TokenResponseDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +39,9 @@ public class AuthController {
     @PostMapping("/sign-in")
     @ResponseStatus(HttpStatus.OK)
     public Response signIn(@Valid @RequestBody LoginRequestDto req) {
+        TokenResponseDto tokenResponseDto = authService.signIn(req);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + tokenResponseDto.getAccessToken());
         return success(authService.signIn(req));
     }
 
