@@ -22,7 +22,7 @@ public class BoardsService {
     private final UserRepository userRepository;
 
     @Transactional
-    public BoardsCreateDto createDto (BoardsRequestDto req) { //게시글 작성
+    public BoardsCreateDto createBoard (BoardsRequestDto req) { //게시글 작성
         User user = SecurityUtil.getCurrentUsername().flatMap(userRepository::findByUsername).orElse(null);
         Boards boards = boardsRepository.save(new Boards(req.getTitle(), req.getContent(), user));
         return BoardsCreateDto.toDto(boards);
@@ -37,7 +37,7 @@ public class BoardsService {
     }
 
     @Transactional
-    public BoardsDto updateDto (Long id, BoardsRequestDto req){ //게시글 수정
+    public BoardsDto updateBoard (Long id, BoardsRequestDto req){ //게시글 수정
         User user = SecurityUtil.getCurrentUsername().flatMap(userRepository::findByUsername).orElse(null);
         Boards boards = boardsRepository.findById(id)
                 .orElseThrow(BoardNotFoundException::new);
@@ -48,6 +48,17 @@ public class BoardsService {
         boards.setBoardsContent(req.getContent());
 
         return BoardsDto.toDto(boards, user.getNickname());
+    }
+
+    @Transactional
+    public void deleteBoard(Long id) { //게시물 삭제
+        Boards boards = boardsRepository.findById(id).orElseThrow(BoardNotFoundException::new);
+        User user = SecurityUtil.getCurrentUsername().flatMap(userRepository::findByUsername).orElse(null);
+
+        if(user != boards.getUser()){
+            throw new MemberNotFoundException();
+        }
+        boardsRepository.delete(boards);
     }
 
 }

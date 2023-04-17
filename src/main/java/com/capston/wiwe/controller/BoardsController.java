@@ -21,21 +21,29 @@ public class BoardsController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public Response create(@Valid @RequestBody BoardsRequestDto req) throws Exception{
-        return Response.success(boardsService.createDto(req));
+        return Response.success(boardsService.createBoard(req));
     }
 
     @ApiOperation(value = "게시글 단건 조회", notes = "게시글을 단건 조회합니다")
     @GetMapping("/boards/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Response findBoard(@ApiParam(value = "게시글 id", required = true) @PathVariable long id) {
+    public Response findBoard(@ApiParam(value = "게시글 id", required = true) @PathVariable Long id) {
         return Response.success(boardsService.findBoards(id));
     }
 
     @ApiOperation(value = "게시글 수정", notes = "게시글을 수정합니다.")
     @PutMapping("/boards/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Response editBoard(@PathVariable long id, @Valid @RequestBody BoardsRequestDto req) {
-        return Response.success(boardsService.updateDto(id, req));
+    public Response editBoard(@PathVariable Long id, @Valid @RequestBody BoardsRequestDto req) {
+        return Response.success(boardsService.updateBoard(id, req));
+    }
+
+    @ApiOperation(value = "게시글 삭제", notes = "게시글을 삭제합니다.")
+    @DeleteMapping("/boards/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Response deleteBoard(@PathVariable Long id) {
+        boardsService.deleteBoard(id);
+        return Response.success(null);
     }
 
 
