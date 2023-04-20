@@ -2,6 +2,7 @@ package com.capston.wiwe.service;
 
 import com.capston.wiwe.config.SecurityUtil;
 import com.capston.wiwe.dto.community.BoardsCreateDto;
+import com.capston.wiwe.dto.community.BoardsMainDto;
 import com.capston.wiwe.dto.community.BoardsRequestDto;
 import com.capston.wiwe.dto.community.BoardsDto;
 import com.capston.wiwe.entity.community.Boards;
@@ -11,8 +12,13 @@ import com.capston.wiwe.exception.MemberNotFoundException;
 import com.capston.wiwe.repository.BoardsRepository;
 import com.capston.wiwe.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -32,8 +38,8 @@ public class BoardsService {
 
         Boards boards = boardsRepository.findById(id)
                 .orElseThrow(BoardNotFoundException::new);
-        User writer = SecurityUtil.getCurrentUsername().flatMap(userRepository::findByUsername).orElse(null);
-        return BoardsDto.toDto(boards, writer.getNickname());
+        User user = boards.getUser();
+        return BoardsDto.toDto(boards, user.getNickname());
     }
 
     @Transactional
@@ -61,4 +67,23 @@ public class BoardsService {
         boardsRepository.delete(boards);
     }
 
+    @Transactional(readOnly = true)
+    public List<BoardsMainDto> findAllPage(Pageable pageable) {
+        Page<Boards> boards = boardsRepository.findAll(pageable);
+        List<BoardsMainDto> boardsMainDtoList = new ArrayList<>();
+        boards.stream().forEach(i -> boardsMainDtoList.add(new BoardsMainDto().toDto(i)));
+        return boardsMainDtoList;
+    }
+
+    @Transactional(readOnly = true)
+    public List<BoardsMainDto> search(String keyword, Pageable pageable) {
+        List<Boards> boards = boardsRepository.findByBoardsTitleContaining(keyword, pageable);
+        List<BoardsMainDto> boardSimpleDtoList = new ArrayList<>();
+        boards.stream().forEach(i -> boardSimpleDtoList.add(new BoardsMainDto().toDto(i)));
+        return boardSimpleDtoList;
+    }
+
+
+
 }
+

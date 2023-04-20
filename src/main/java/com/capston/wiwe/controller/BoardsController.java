@@ -6,6 +6,9 @@ import com.capston.wiwe.service.BoardsService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +48,23 @@ public class BoardsController {
         boardsService.deleteBoard(id);
         return Response.success(null);
     }
+
+    @ApiOperation(value = "게시글 목록 조회", notes = "게시글 목록을 조회합니다.")
+    @GetMapping("/boards")
+    @ResponseStatus(HttpStatus.OK) //sort 변수 이름 주의!
+    public Response findAllPage(@PageableDefault(size = 5, sort = "boardsId", direction = Sort.Direction.DESC) Pageable pageable) {
+        // ex) http://localhost:8080/boards/boards/?page=0
+        return Response.success(boardsService.findAllPage(pageable));
+    }
+
+    @ApiOperation(value = "게시글 검색", notes = "게시글을 검색합니다.")
+    @GetMapping("/boards/search")
+    @ResponseStatus(HttpStatus.OK)
+    public Response search(String keyword, @PageableDefault(size = 5, sort = "boardsId", direction = Sort.Direction.DESC) Pageable pageable) {
+        // ex) http://localhost:8080/boards/boards/search?page=0
+        return Response.success(boardsService.search(keyword, pageable));
+    }
+
 
 
 }
