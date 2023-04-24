@@ -1,5 +1,6 @@
 package com.capston.wiwe.entity.user;
 
+import com.capston.wiwe.entity.Auditor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,10 +13,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class User {
+@Table(name = "user")
+public class User extends Auditor {
     @Id
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private int userId;
 
     @Column(nullable = false, unique = true)
     private String username;
