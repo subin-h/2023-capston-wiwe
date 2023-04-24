@@ -9,8 +9,8 @@ import java.util.List;
 
 
 public interface BoardsRepository extends JpaRepository<Boards, Long> {
-    Page<Boards> findAll(Pageable pageable);
-    List<Boards> findByBoardsTitleContaining(String keyword, Pageable pageable); // findBy 변수 이름 정하기 주의!
+    List<Boards> findAll();
+    List<Boards> findByBoardsTitleContaining(String keyword); // findBy 변수 이름 정하기 주의!
 
 
 }

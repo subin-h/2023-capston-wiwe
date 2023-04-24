@@ -68,16 +68,16 @@ public class BoardsService {
     }
 
     @Transactional(readOnly = true)
-    public List<BoardsMainDto> findAllPage(Pageable pageable) {
-        Page<Boards> boards = boardsRepository.findAll(pageable);
+    public List<BoardsMainDto> findAllPage() {
+        List<Boards> boards = boardsRepository.findAll();
         List<BoardsMainDto> boardsMainDtoList = new ArrayList<>();
         boards.stream().forEach(i -> boardsMainDtoList.add(new BoardsMainDto().toDto(i)));
         return boardsMainDtoList;
     }
 
     @Transactional(readOnly = true)
-    public List<BoardsMainDto> search(String keyword, Pageable pageable) {
-        List<Boards> boards = boardsRepository.findByBoardsTitleContaining(keyword, pageable);
+    public List<BoardsMainDto> search(String keyword) {
+        List<Boards> boards = boardsRepository.findByBoardsTitleContaining(keyword);
         List<BoardsMainDto> boardSimpleDtoList = new ArrayList<>();
         boards.stream().forEach(i -> boardSimpleDtoList.add(new BoardsMainDto().toDto(i)));
         return boardSimpleDtoList;

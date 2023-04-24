@@ -51,18 +51,18 @@ public class BoardsController {
 
     @ApiOperation(value = "게시글 목록 조회", notes = "게시글 목록을 조회합니다.")
     @GetMapping("/boards")
-    @ResponseStatus(HttpStatus.OK) //sort 변수 이름 주의!
-    public Response findAllPage(@PageableDefault(sort = "boardsId", direction = Sort.Direction.DESC) Pageable pageable) {
+    @ResponseStatus(HttpStatus.OK)
+    public Response findAllPage() {
         // ex) http://localhost:8080/boards/boards/?page=0
-        return Response.success(boardsService.findAllPage(pageable));
+        return Response.success(boardsService.findAllPage());
     }
 
     @ApiOperation(value = "게시글 검색", notes = "게시글을 검색합니다.")
     @GetMapping("/boards/search")
     @ResponseStatus(HttpStatus.OK)
-    public Response search(String keyword, @PageableDefault(sort = "boardsId", direction = Sort.Direction.DESC) Pageable pageable) {
+    public Response search(String keyword) {
         // ex) http://localhost:8080/boards/boards/search?page=0
-        return Response.success(boardsService.search(keyword, pageable));
+        return Response.success(boardsService.search(keyword));
     }
 
 
