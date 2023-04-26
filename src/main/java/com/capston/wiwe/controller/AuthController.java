@@ -39,9 +39,6 @@ public class AuthController {
     @PostMapping("/sign-in")
     @ResponseStatus(HttpStatus.OK)
     public Response signIn(@Valid @RequestBody LoginRequestDto req) {
-        TokenResponseDto tokenResponseDto = authService.signIn(req);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + tokenResponseDto.getAccessToken());
         return success(authService.signIn(req));
     }
 

@@ -36,8 +36,7 @@ public class User extends Auditor {
 
     @Enumerated(EnumType.STRING)
     private Authority authority;
-    @Column(nullable = false)
-    private boolean reported;
+
 
     @Builder
     public User(String username, String password, String nickname, String name, Authority authority) {

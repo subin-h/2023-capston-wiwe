@@ -22,8 +22,9 @@ public class Boards extends Auditor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long boardsId;
 
+    @Column(name = "boards_title")
     private String boardsTitle;
-    @Lob
+    @Column(name = "boards_content")
     private String boardsContent;
 
     @ManyToOne(fetch = FetchType.LAZY)

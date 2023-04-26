@@ -53,7 +53,6 @@ public class BoardsController {
     @GetMapping("/boards")
     @ResponseStatus(HttpStatus.OK)
     public Response findAllPage() {
-        // ex) http://localhost:8080/boards/boards/?page=0
         return Response.success(boardsService.findAllPage());
     }
 
@@ -61,7 +60,6 @@ public class BoardsController {
     @GetMapping("/boards/search")
     @ResponseStatus(HttpStatus.OK)
     public Response search(String keyword) {
-        // ex) http://localhost:8080/boards/boards/search?page=0
         return Response.success(boardsService.search(keyword));
     }
 
