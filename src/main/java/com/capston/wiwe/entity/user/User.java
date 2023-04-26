@@ -2,10 +2,7 @@ package com.capston.wiwe.entity.user;
 
 import com.capston.wiwe.entity.Auditor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,7 +10,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Data
+@Getter
+@Setter
+@Builder
 @Table(name = "user")
 public class User extends Auditor {
     @Id
